@@ -1,66 +1,27 @@
 import React from 'react';
-import { connect } from 'react-redux'
 import './App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Login from './components/Login';
+import { BrowserRouter, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import LandingPage from './components/LandingPage';
+import Login from './components/Login';
 import Dashboard from './containers/Dashboard';
-import AddNoteForm from './components/AddNoteForm';
+import NewNoteForm from './components/NewNoteForm';
 
-
-const API = 'http://localhost:3000'
-const USERS = `${API}/users`
-const TAGS = `${API}/tags`
-
-class App extends React.Component {
-
-  componentDidMount() {
-    fetch(USERS)
-      .then( resp => resp.json() )
-      .then( users => this.props.setUsers(users))
-    fetch(TAGS)
-      .then( resp => resp.json() )
-      .then( tags => this.props.setTags(tags))
-  }
-
-  render() {
-    return (
-      <Router>
-        <div>
-          <Route path='/login'>
-            <Login />
-          </Route>
-          <Route path="/home">
-            <Navbar />
-            <Dashboard />
-          </Route>
-          <Route path='/note/new'>
-            <Navbar />
-            <AddNoteForm />
-          </Route>
-          <Route path='/note/:id'>
-            <Navbar />
-            <Dashboard />
-          </Route>
-        </div>
-      </Router>
-    )
-  }
+const App = () => {
+  return (
+    <BrowserRouter>
+      <div>
+        <Navbar />
+          <Switch>
+            <Route path='/login' component={Login}/>
+            <Route path='/home' component={Dashboard}/>
+            <Route path='/note/new' component={NewNoteForm}/>
+            <Route path='/' component={LandingPage}/>
+          </Switch>
+      </div>
+    </BrowserRouter>
+  )
 }
 
-const mapStateToProps = state => {
-  return {
-    username: state.username,
-    users: state.users,
-    user: state.user
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setUsers: (userData) => dispatch({type: 'SET_USERS', users: userData}),
-    setTags: (tags) => dispatch({type: 'SET_TAGS', tags: tags})
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
