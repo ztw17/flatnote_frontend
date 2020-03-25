@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './App.css';
 import { BrowserRouter, Switch } from 'react-router-dom';
 import { Route } from 'react-router-dom';
@@ -12,12 +13,12 @@ const App = () => {
   return (
     <BrowserRouter>
       <div>
-        <Navbar />
+        {/* <Navbar /> */}
           <Switch>
+            {/* <Route path='/' component={LandingPage}/> */}
             <Route path='/login' component={Login}/>
-            <Route path='/home' component={Dashboard}/>
+            <Route path='/dashboard' component={Dashboard}/>
             <Route path='/note/new' component={NewNoteForm}/>
-            <Route path='/' component={LandingPage}/>
           </Switch>
       </div>
     </BrowserRouter>

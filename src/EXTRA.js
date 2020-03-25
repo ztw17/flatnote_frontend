@@ -103,3 +103,71 @@ class Dashboard extends React.Component {
 // export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
 
 export default Dashboard
+
+///////////
+
+const API = 'http://localhost:3000'
+const USERS = `${API}/users`
+const NOTES = `${API}/notes`
+const TAGS = `${API}/tags`
+
+class App extends React.Component {
+
+  componentDidMount() {
+    fetch(USERS)
+      .then( resp => resp.json() )
+      .then(users => {
+        console.log(users)
+        this.props.getUsers(users)
+      })
+    fetch(NOTES)
+      .then( resp => resp.json() )
+      .then(notes => {
+        console.log(notes)
+        this.props.getNotes(notes)
+      })
+    fetch(TAGS)
+      .then( resp => resp.json() )
+      .then(tags => {
+        console.log(tags)
+        this.props.getTags(tags)
+      })
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <div>
+          <Navbar />
+            <Switch>
+              <Route path='/login' component={Login}/>
+              <Route path='/dashboard' component={Dashboard}/>
+              <Route path='/note/new' component={NewNoteForm}/>
+              <Route path='/' component={LandingPage}/>
+            </Switch>
+        </div>
+      </BrowserRouter>
+    )
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    username: state.username,
+    users: state.users,
+    user: state.user
+  }
+}
+
+const mapDispatchToPops = dispatch => {
+  return {
+    getUsers: (userData) => dispatch({type: 'SET_USERS', users: userData}),
+    getNotes: (noteData) => dispatch({type: 'SET_NOTES', notes: noteData}),
+    getTags: (tagData) => dispatch({type: 'SET_TAGS', tags: tagData})
+  }
+}
+
+// export default App;
+export default connect(mapStateToProps, mapDispatchToPops)(App);
+
+////
