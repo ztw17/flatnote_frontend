@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Login from './components/Login';
-import Navbar from './components/Navbar';
+import Navbar from './components/blah';
 import Dashboard from './containers/Dashboard';
 import AddNoteForm from './components/AddNoteForm';
 

@@ -1,82 +1,38 @@
 import React from 'react';
-import { Button, Form } from 'semantic-ui-react';
-import { connect } from 'react-redux';
-
-const API = 'http://localhost:3000'
-const USERS = `${API}/users`
-
-const addUser = (user) => {
-  return {
-  type: 'ADD_USER',
-  userInfo: {
-    id: user.id,
-    username: user.username,
-    notes: user.notes
-    }
-  }
-}
 
 class Login extends React.Component {
-  constructor() {
-    super()
+  constructor(props){
+    super(props)
     this.state = {
       username: '',
-      notes: [],
-      tags: []
     }
   }
 
-  handleChange = event => {
+  submitLogin = (event) => {
+    this.props.history.push('/dashboard')
+    this.props.handleSubmit(event)
+  }
+
+  handleInputChange = (event) => {
     console.log(event.target.value)
     this.setState({
-      username: event.target.value
+      [event.target.name]: event.target.value
     })
   }
 
-  handleSubmit = event => {
-    // event.preventDefault() 
-
-    const reqObj = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        username: this.state.username,
-        notes: this.state.notes,
-        tags: this.state.tags
-      })
-    }
-    fetch(USERS, reqObj)
-      .then( resp => resp.json() )
-      .then(user => {
-        console.log(user)
-        this.props.addUser(user)
-        this.props.history.push('/dashboard')
-    })
-    this.setState({
-      username: '',
-      notes: [],
-      tags: []
-    })
-  }
-
-  render() {
+  render(){
+    //console.log('-----------', this.props)
     return (
-      <Form>
-        <Form.Field width={6}>
-          <label>Please enter a new or existing username</label>
-          <input onChange={(event) => this.handleChange(event)} type="text" name="username" placeholder='username' />
-        </Form.Field>
-        <Button onSubmit={(event) => this.handleSubmit(event)} type='submit'>Login</Button>
-      </Form>
-    )
+      <div>
+        <h1>Welcome to Flatnote!</h1>
+        <h3>Please log in below with a new or existing username</h3>
+        <form onSubmit={this.submitLogin}>
+          <input name={'username'} onChange={(event) => this.handleInputChange(event, this.state.username)} value={this.state.username} />
+          <input type='submit' value='login' />
+        </form>
+      </div>
+    );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  addUser: user => dispatch(addUser(user))
-})
-
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;
