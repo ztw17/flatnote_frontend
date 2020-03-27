@@ -40,6 +40,7 @@ class ShowNote extends React.Component {
       </div>
       <div style={{display: 'flex', justifyContent: 'center'}}>
         <Button onClick={this.deleteNote} basic color='red'>Delete Note</Button>
+        <Button basic color='yellow'>Edit Note</Button>
       </div>
     </div>
     )

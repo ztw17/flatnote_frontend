@@ -45,7 +45,7 @@ class App extends React.Component {
       fetch(USERS, reqObj)
         .then(resp => resp.json())
         .then(data => {
-        console.log(data)
+        // console.log(data)
         if (data.error) {
           alert(data.error)
         } else {
@@ -59,12 +59,16 @@ class App extends React.Component {
 
   resetUserObj = () => {
     this.setState({
-      userObj: {}
+        username: '',
+        userId: '',
+        notes: [],
+        showNote: {},
+        addNote: {}
     })
   }
 
   handleClick = (note) => {
-    console.log(note.id)
+    // console.log(note.id)
     this.setState({
       showNote: note
     })
@@ -101,7 +105,7 @@ class App extends React.Component {
     const reqObj = {
       method: "DELETE"
     } 
-    console.log('delete hit')
+    // console.log('delete hit')
     fetch(`${NOTES}/${this.state.showNote.id}`, reqObj)
       .then( resp => resp.json() )
       .then( deletedNote => {
