@@ -24,9 +24,9 @@ class Login extends React.Component {
     //console.log('-----------', this.props)
     return (
       <div>
-        <h1>Welcome to Flatnote!</h1>
-        <h3>Please log in below with a new or existing username</h3>
-        <form onSubmit={this.submitLogin}>
+        <h1 style={{display: 'flex', justifyContent: 'center'}}>Welcome to Flatnote!</h1>
+        <h3 style={{display: 'flex', justifyContent: 'center'}}>Please log in below with a new or existing username</h3>
+        <form style={{display: 'flex', justifyContent: 'center'}} onSubmit={this.submitLogin}>
           <input name={'username'} onChange={(event) => this.handleInputChange(event, this.state.username)} value={this.state.username} />
           <input type='submit' value='login' />
         </form>

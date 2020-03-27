@@ -24,7 +24,7 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:3000/notes')
+    fetch(NOTES)
       .then( resp => resp.json() )
       .then(notesData => this.setState({
         notes: notesData
@@ -54,6 +54,12 @@ class App extends React.Component {
             userId: data.id
         })
       }
+    })
+  }
+
+  resetUserObj = () => {
+    this.setState({
+      userObj: {}
     })
   }
 
@@ -91,22 +97,31 @@ class App extends React.Component {
     })
   }
 
-  // deleteNote = () => {
-  //   const killedNote = this.state.notes.filter(note => {
-  //     ret
-  //   })
-  // }
-  
+  handleDelete = () => {
+    const reqObj = {
+      method: "DELETE"
+    } 
+    console.log('delete hit')
+    fetch(`${NOTES}/${this.state.showNote.id}`, reqObj)
+      .then( resp => resp.json() )
+      .then( deletedNote => {
+        const newNotes = this.state.notes.filter(note => note.id !== deletedNote.id)
+        this.setState({
+          notes: newNotes
+        })
+      })
+  }
+
   render() {
     return (
       <Router>
         <div>
-          <Navbar username={this.state.username}/>
+          <Route render={(props) => <Navbar {...props} username={this.state.username} resetUserObj={this.resetUserObj}/>}/>
             <Switch>
               <Route path='/login' render={(props) => <Login {...props} handleSubmit={this.handleSubmit}/>}/>
               <Route path='/dashboard' render={(props) => <NotesContainer {...props} handleClick={this.handleClick} notes={this.state.notes}/>}/>
               <Route path='/note/new' render={(props) => <AddNewNote {...props} addNote={this.addNote}/>}/>
-              <Route path='/note/:id' render={(props) => <ShowNote {...props} showNote={this.state.showNote}/>}/>
+              <Route path='/note/:id' render={(props) => <ShowNote {...props} showNote={this.state.showNote} handleDelete={this.handleDelete}/>}/>
             </Switch>
         </div>
       </Router>

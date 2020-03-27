@@ -5,7 +5,10 @@ import { Menu } from 'semantic-ui-react'
 class Navbar extends React.Component {
     state = { activeItem: 'home' }
 
-    // handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+    handleLogout = () => {
+      this.props.resetUserObj()
+      this.props.history.push('/login')
+    }
   
     render() {
       const { activeItem } = this.state
@@ -27,7 +30,7 @@ class Navbar extends React.Component {
               <Menu.Item as={ Link }
                 name={this.props.username ? 'logout' : 'login'}
                 active={activeItem === 'logout'}
-                to='/login'
+                onClick={this.handleLogout}
               />
             </Menu.Menu>
           </Menu>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Header } from 'semantic-ui-react';
 import { Button } from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
 
 const API = 'http://localhost:3000'
 const NOTES = `${API}/notes`
@@ -10,9 +11,9 @@ class ShowNote extends React.Component {
   renderNote = () => {
     if (this.props.showNote.title) {
       return (
-        <div><Header>{this.props.showNote.title}</Header>
+        <div><Header style={{display: 'flex', justifyContent: 'center'}}>{this.props.showNote.title}</Header>
           <p>{this.props.showNote.content}</p>
-        <h3>Tags:</h3>
+        <h5>Tags: </h5>
           <p>{this.renderTags()}</p>
       </div>
       )
@@ -22,25 +23,24 @@ class ShowNote extends React.Component {
   renderTags = () => {
     if (this.props.showNote.tags)
       return this.props.showNote.tags.map(tag => {
-        return <h4>{tag.name}</h4>
+        return <p>{tag.name}</p>
     })
   }
 
-  handleDelete = (event) => {
-    const reqObj = {
-      method: "DELETE"
-    } 
-    console.log('delete hit')
-    fetch(`${NOTES}/${this.props.showNote.id}`, reqObj)
-      .then( resp => resp.json() )
-      .then( note => this.props.showNote.remove(note) )
-      this.props.history.push('/dashboard')
+  deleteNote = (event) => {
+    this.props.history.push('/dashboard')
+    this.props.handleDelete(event)
   }
   
   render(){
-    return(<div>
-      <Container>{this.renderNote()}</Container>
-      <Button onClick={this.handleDelete} basic color='red'>Delete Note</Button>
+    return(
+    <div>
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <Card>{this.renderNote()}</Card>
+      </div>
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <Button onClick={this.deleteNote} basic color='red'>Delete Note</Button>
+      </div>
     </div>
     )
   }
