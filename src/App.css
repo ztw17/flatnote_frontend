@@ -4,22 +4,26 @@
   width: 50%;
   padding: 70px 0
 }
-.new-note{
+/* .new-note{
   position:relative;
   width: 700px;
   right:50px;
-}
+} */
 
-.app{
+/* .app{
   position:relative;
   width: 800px;
   left: 100px;
   top:50px;
   background-color: #282c34;
+} */
+
+.ui-pointing-secondary-menu{
+  color: #282c34
 }
 
-.navbar{
-  background-color: #282c34
+body{
+  color: #282c34
 }
 
 
